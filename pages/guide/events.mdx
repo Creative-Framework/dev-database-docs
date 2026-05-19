@@ -1,0 +1,39 @@
+# Events
+
+Dev-Database extends a custom, lightweight `EventEmitter` that allows you to listen for various changes happening inside your database.
+
+```ts
+import DevDatabase from 'dev-database';
+
+const db = new DevDatabase('database.json');
+
+// Fires when the database is loaded successfully
+db.on('ready', () => {
+  console.log('Database loaded!');
+});
+
+// Fires when a key is set
+db.on('set', (key, value, oldValue) => {
+  console.log(`${key} changed from ${oldValue} to ${value}`);
+});
+
+// Fires when a key is deleted
+db.on('delete', (key, value) => {
+  console.log(`${key} was deleted (was: ${value})`);
+});
+
+// Fires when the database is cleared
+db.on('clear', () => {
+  console.log('Database cleared!');
+});
+
+// Fires when the data is written to disk
+db.on('save', () => {
+  console.log('Data saved to disk!');
+});
+
+// Fires on any error (like read/write errors)
+db.on('error', (error) => {
+  console.error('Database error:', error);
+});
+```
